@@ -10,9 +10,8 @@ namespace vWoW
 
         static void Main(string[] args)
         {
-
-
-
+            Console.WriteLine("jaaa");
+            Console.ReadLine();
             Clients.Client client = new Clients.Client();
             client.ConnectLogon();
             Console.ReadLine();

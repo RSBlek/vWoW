@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using vWoW.Constants.Enums;
 using vWoW.Network.PacketHandling;
 
@@ -13,12 +14,27 @@ namespace vWoW.Network
         private NetworkStream networkStream;
         private PacketType packetType;
         private PacketHandler packetHandler;
+        private Thread packetReadLoopThread;
 
         public ManagedTCP(PacketHandler packetHandler, PacketType packetType)
         {
             this.packetType = packetType;
             tcpClient = new TcpClient();
             this.packetHandler = packetHandler;
+            packetReadLoopThread = new Thread(PacketReadLoop);
+            packetReadLoopThread.IsBackground = true;
+            packetReadLoopThread.Start();
+        }
+
+        public void PacketReadLoop()
+        {
+            while (true)
+            {
+                while (Read()) ;
+                Thread.Sleep(10);
+            }
+                
+            
         }
 
         public void Connect(string host, int port)
@@ -44,6 +60,7 @@ namespace vWoW.Network
                 byte[] data = new byte[tcpClient.Available];
                 networkStream.Read(data, 0, data.Length);
                 inPacket = new InPacket(data, false);
+                packetHandler.AddInPacket(inPacket);
                 return true;
             }else if(packetType == PacketType.World)
             {

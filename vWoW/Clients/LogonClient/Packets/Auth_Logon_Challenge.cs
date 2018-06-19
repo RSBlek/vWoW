@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using vWoW.Constants.Enums;
+using vWoW.Logging;
 using vWoW.Network;
 using vWoW.Network.PacketHandling;
 
@@ -36,6 +37,8 @@ namespace vWoW.Clients
             outPacket.WriteString(identity.ToUpper(), false);
             Send(outPacket);
         }
+
+
 
     }
 }
