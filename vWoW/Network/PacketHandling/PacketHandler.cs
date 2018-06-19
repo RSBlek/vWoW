@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using vWoW.Clients;
 using vWoW.Data.Enums;
 
@@ -9,6 +10,8 @@ namespace vWoW.Network.PacketHandling
 {
     public class PacketHandler
     {
+        private Mutex packetMutex = new Mutex();
+        private Thread packetHandlingLoopThread;
         private Dictionary<PacketOp, MethodInfo> Handles { get; } = new Dictionary<PacketOp, MethodInfo>();
         private LinkedList<InPacket> inPackets = new LinkedList<InPacket>();
         private WorldClient worldClient;
@@ -25,6 +28,19 @@ namespace vWoW.Network.PacketHandling
 
         public void Initialize()
         {
+            LoadHandlers();
+            StartHandlingLoop();
+        }
+
+        private void StartHandlingLoop()
+        {
+            packetHandlingLoopThread = new Thread(PacketHandlingLoop);
+            packetHandlingLoopThread.Start();
+        }
+
+
+        private void LoadHandlers()
+        {
             foreach (Type asmType in Assembly.GetCallingAssembly().GetTypes())
             {
                 foreach (MethodInfo methodinfo in asmType.GetMethods())
@@ -37,6 +53,22 @@ namespace vWoW.Network.PacketHandling
                         Handles.Add(packetHandlingMethodAttribute.PacketOp, methodinfo);
                     }
                 }
+            }
+        }
+
+        private void PacketHandlingLoop()
+        {
+            while (true)
+            {
+                while(inPackets.Count > 0)
+                {
+                    packetMutex.WaitOne();
+                    InPacket inPacket = inPackets.First.Value;
+                    inPackets.RemoveFirst();
+                    packetMutex.ReleaseMutex();
+                    Handle(inPacket);
+                }
+                Thread.Sleep(10);
             }
         }
 
@@ -54,7 +86,9 @@ namespace vWoW.Network.PacketHandling
 
         public void AddInPacket(InPacket inPacket)
         {
+            packetMutex.WaitOne();
             inPackets.AddLast(inPacket);
+            packetMutex.ReleaseMutex();
         }
 
 
