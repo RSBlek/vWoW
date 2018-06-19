@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using vWoW.Clients;
 using vWoW.Data.Enums;
+using vWoW.Logging;
 
 namespace vWoW.Network.PacketHandling
 {
@@ -75,10 +76,13 @@ namespace vWoW.Network.PacketHandling
         public void Handle(InPacket inPacket)
         {
             if (!Handles.ContainsKey(inPacket.PacketOp))
-                return;
+            {
+                Logger.Log(LogType.Warning, $"Received unhandled {inPacket.PacketOp.Type} {inPacket.PacketOp.RawID}");
+            }
+                
             MethodInfo method = Handles[inPacket.PacketOp];
-
-            if(inPacket.PacketOp.Type == PacketType.Logon)
+            Logger.Log(inPacket);
+            if (inPacket.PacketOp.Type == PacketType.Logon)
                 method.Invoke(logonClient, new object[] { inPacket });
             else if(inPacket.PacketOp.Type == PacketType.World)
                 method.Invoke(worldClient, new object[] { inPacket });
