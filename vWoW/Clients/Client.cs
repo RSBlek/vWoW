@@ -27,7 +27,7 @@ namespace vWoW.Clients
         public void Login(String realmlist,String username, String password)
         {
             managedTCP.Connect(realmlist, 3724);
-            logonClient.AuthLogonChallengeRequest(username);
+            logonClient.AuthLogonChallengeRequest(username, password);
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using vWoW.Cryptography;
 using vWoW.Data.Enums;
 using vWoW.Logging;
 using vWoW.Network;
@@ -20,12 +21,30 @@ namespace vWoW.Clients
                 Logger.Log(LogType.Warning, $"Login failed: {accountStatus}");
                 return;
             }
+            byte[] B = inPacket.ReadBytes(32);
+            byte glen = inPacket.ReadByte();
+            byte[] g = inPacket.ReadBytes(glen);
+            byte Nlen = inPacket.ReadByte();
+            byte[] N = inPacket.ReadBytes(Nlen);
+            byte[] Salt = inPacket.ReadBytes(32);
+            this.clientHMACSeed = inPacket.ReadBytes(16);
+            this.securityFlags = inPacket.ReadByte();
+            this.srp6 = new SRP6(B, g, N, Salt, username, password);
+            srp6.GenerateAll();
 
+            byte[] clienthmachash = new byte[20];
+            Sha1Hash sha = new Sha1Hash();
+            sha.Update(srp6.A);
+            sha.Update(clienthmachash);
+            clienthmachash = sha.Final();
+            AuthLogonProofRequest(clienthmachash);
         }
 
 
-        public void AuthLogonChallengeRequest(string identity)
+        public void AuthLogonChallengeRequest(string identity, string password)
         {
+            this.username = identity.ToUpper();
+            this.password = password.ToUpper();
             OutPacket outPacket = new OutPacket(LogonOpCode.AUTH_LOGON_CHALLENGE);
             outPacket.Write(ProtocolVersion.ProtocolVersionNew);
             outPacket.WriteUH(30 + identity.Length);
