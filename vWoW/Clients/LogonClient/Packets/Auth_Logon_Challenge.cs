@@ -15,7 +15,7 @@ namespace vWoW.Clients
         public void AuthLogonChallengeResponse(InPacket inPacket)
         {
             AccountStatus accountStatus = (AccountStatus)inPacket.ReadByte();
-            if(accountStatus != AccountStatus.Ok)
+            if(accountStatus != AccountStatus.Success)
             {
                 Logger.Log(LogType.Warning, $"Login failed: {accountStatus}");
                 return;

@@ -24,10 +24,10 @@ namespace vWoW.Clients
             logonClient.SetManagedTcp(managedTCP);
         }
 
-        public void ConnectLogon()
+        public void Login(String realmlist,String username, String password)
         {
-            managedTCP.Connect("login.zombiewow.com", 3724);
-            logonClient.AuthLogonChallengeRequest("scorniii");
+            managedTCP.Connect(realmlist, 3724);
+            logonClient.AuthLogonChallengeRequest(username);
         }
 
     }
