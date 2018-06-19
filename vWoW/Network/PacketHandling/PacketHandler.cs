@@ -84,11 +84,14 @@ namespace vWoW.Network.PacketHandling
                 method.Invoke(worldClient, new object[] { inPacket });
         }
 
-        public void AddInPacket(InPacket inPacket)
+        public bool AddInPacket(InPacket inPacket)
         {
+            if (inPacket == null)
+                return false;
             packetMutex.WaitOne();
             inPackets.AddLast(inPacket);
             packetMutex.ReleaseMutex();
+            return true;
         }
 
 

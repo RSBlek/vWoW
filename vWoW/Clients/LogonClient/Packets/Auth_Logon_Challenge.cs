@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using vWoW.Data.Enums;
+using vWoW.Logging;
 using vWoW.Network;
 using vWoW.Network.PacketHandling;
 
@@ -13,7 +14,13 @@ namespace vWoW.Clients
         [PacketHandlingMethod(LogonOpCode.AUTH_LOGON_CHALLENGE)]
         public void AuthLogonChallengeResponse(InPacket inPacket)
         {
-            
+            AccountStatus accountStatus = (AccountStatus)inPacket.ReadByte();
+            if(accountStatus != AccountStatus.Ok)
+            {
+                Logger.Log(LogType.Warning, $"Login failed: {accountStatus}");
+                return;
+            }
+
         }
 
 
