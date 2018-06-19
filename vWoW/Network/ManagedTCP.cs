@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using vWoW.Constants.Enums;
+using vWoW.Data.Enums;
 using vWoW.Network.PacketHandling;
 
 namespace vWoW.Network

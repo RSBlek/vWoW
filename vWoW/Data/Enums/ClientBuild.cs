@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace vWoW.Constants.Enums
+namespace vWoW.Data.Enums
 {
-    public enum ClientBuild : ushort //Must be ushort. uint16 build;
+    public enum ClientBuild : ushort
     {
         Vanilla_1_12_1 = 5875,
         Vanilla_1_12_2 = 6005,

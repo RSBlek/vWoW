@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace vWoW.Constants.Enums
+namespace vWoW.Data.Enums
 {
 
 

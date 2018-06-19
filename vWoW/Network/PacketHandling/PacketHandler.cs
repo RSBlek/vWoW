@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using vWoW.Clients;
-using vWoW.Constants.Enums;
+using vWoW.Data.Enums;
 
 namespace vWoW.Network.PacketHandling
 {

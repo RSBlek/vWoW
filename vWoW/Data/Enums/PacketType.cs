@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace vWoW.Constants.Enums
+namespace vWoW.Data.Enums
 {
-    public enum TimeZoneBias : uint
+    public enum PacketType
     {
-        MEZ = 0x3C
+        Logon,
+        World
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace vWoW.Constants.Enums
+namespace vWoW.Data.Enums
 {
     public enum LogonOpCode : byte
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using vWoW.Constants.Enums;
+using vWoW.Data.Enums;
 
 namespace vWoW.Network.PacketHandling
 {
