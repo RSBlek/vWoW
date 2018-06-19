@@ -77,9 +77,9 @@ namespace vWoW.Network.PacketHandling
         {
             if (!Handles.ContainsKey(inPacket.PacketOp))
             {
-                Logger.Log(LogType.Warning, $"Received unhandled {inPacket.PacketOp.Type} {inPacket.PacketOp.RawID}");
+                Logger.Log(LogType.Warning, $"Received unhandled {inPacket.PacketOp.Type}Packet OpCode={inPacket.PacketOp.RawID}");
+                return;
             }
-                
             MethodInfo method = Handles[inPacket.PacketOp];
             Logger.Log(inPacket);
             if (inPacket.PacketOp.Type == PacketType.Logon)
