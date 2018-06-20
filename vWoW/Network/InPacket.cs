@@ -14,7 +14,7 @@ namespace vWoW.Network
             if (isWorld)
                 PacketOp = new PacketOp((WorldOpCode)base.ReadUInt32());
             else
-                PacketOp = new PacketOp((LogonOpCode)base.ReadUInt16());
+                PacketOp = new PacketOp((LogonOpCode)base.ReadByte());
         }
 
 

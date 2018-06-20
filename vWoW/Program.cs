@@ -12,7 +12,7 @@ namespace vWoW
         static void Main(string[] args)
         {
             Clients.Client client = new Clients.Client();
-            client.Login("login.zombiewow.com", "hackxlol", "asdasdasdd");
+            client.Login("login.zombiewow.com", "hackxlol", "asdasdasd");
             Console.ReadLine();
         }
     }

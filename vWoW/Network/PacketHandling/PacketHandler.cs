@@ -58,6 +58,7 @@ namespace vWoW.Network.PacketHandling
                     }
                 }
             }
+            Logger.Log(LogType.Normal, $"Loaded {Handles.Count} packet handlers");
         }
 
         private void PacketHandlingLoop()

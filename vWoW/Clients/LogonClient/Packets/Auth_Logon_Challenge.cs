@@ -21,6 +21,7 @@ namespace vWoW.Clients
                 Logger.Log(LogType.Warning, $"Login failed: {accountStatus}");
                 return;
             }
+            inPacket.ReadByte(); // Always 0
             byte[] B = inPacket.ReadBytes(32);
             byte glen = inPacket.ReadByte();
             byte[] g = inPacket.ReadBytes(glen);
