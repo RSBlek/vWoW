@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using vWoW.Cryptography;
+using vWoW.Data;
 using vWoW.Network;
 
 namespace vWoW.Clients
@@ -14,6 +15,7 @@ namespace vWoW.Clients
         private byte securityFlags;
         private string username;
         private string password;
+        private List<RealmInfo> realms = new List<RealmInfo>(); 
 
         public void SetManagedTcp(ManagedTCP managedTCP)
         {

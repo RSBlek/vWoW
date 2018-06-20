@@ -15,13 +15,13 @@ namespace vWoW.Clients
         [PacketHandlingMethod(LogonOpCode.AUTH_LOGON_CHALLENGE)]
         public void AuthLogonChallengeResponse(InPacket inPacket)
         {
+            inPacket.ReadByte(); // Always 0
             AccountStatus accountStatus = (AccountStatus)inPacket.ReadByte();
             if(accountStatus != AccountStatus.Success)
             {
                 Logger.Log(LogType.Warning, $"Login failed: {accountStatus}");
                 return;
             }
-            inPacket.ReadByte(); // Always 0
             byte[] B = inPacket.ReadBytes(32);
             byte glen = inPacket.ReadByte();
             byte[] g = inPacket.ReadBytes(glen);

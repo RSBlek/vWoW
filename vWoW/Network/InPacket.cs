@@ -8,7 +8,7 @@ namespace vWoW.Network
 {
     public class InPacket : BinaryReader
     {
-         public PacketOp PacketOp { get; }
+        public PacketOp PacketOp { get; }
         public InPacket(byte[] data, bool isWorld) : base(new MemoryStream(data))
         {
             if (isWorld)
@@ -17,6 +17,18 @@ namespace vWoW.Network
                 PacketOp = new PacketOp((LogonOpCode)base.ReadByte());
         }
 
+        public override string ReadString()
+        {
+            StringBuilder sb = new StringBuilder();
+            while (true)
+            {
+                byte b;
+                b = ReadByte();
+                if (b == 0) break;
+                sb.Append((char)b);
+            }
+            return sb.ToString();
+        }
 
     }
 }

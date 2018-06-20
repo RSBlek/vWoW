@@ -24,6 +24,7 @@ namespace vWoW.Clients
             AccountAuthorizationFlags accountAuthorizationFlags = (AccountAuthorizationFlags)inPacket.ReadUInt32();
             uint surveyId = inPacket.ReadUInt32(); //Always 0
             ushort unk01 = inPacket.ReadUInt16(); // Always 0
+            RealmListRequest();
         }
 
 
