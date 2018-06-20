@@ -19,15 +19,20 @@ namespace vWoW.Clients
             this.logonClient = new LogonClient();
             this.worldClient = new WorldClient();
             this.packetHandler = new PacketHandler(this, logonClient, worldClient);
-            this.managedTCP = new ManagedTCP(packetHandler, PacketType.Logon);
+            this.managedTCP = new ManagedTCP(packetHandler);
             worldClient.SetManagedTcp(managedTCP);
             logonClient.SetManagedTcp(managedTCP);
         }
 
         public void Login(String realmlist,String username, String password)
         {
-            managedTCP.Connect(realmlist, 3724);
+            managedTCP.Connect(realmlist, 3724, PacketType.Logon);
             logonClient.AuthLogonChallengeRequest(username, password);
+        }
+
+        public void EnterRealm(byte realmid)
+        {
+            this.managedTCP.Reconnect(logonClient.Realms[realmid].RealmEndpoint.realmHost, logonClient.Realms[realmid].RealmEndpoint.realmPort, PacketType.World);
         }
 
     }

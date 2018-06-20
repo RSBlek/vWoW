@@ -39,10 +39,11 @@ namespace vWoW.Clients
                     realmBuildInformation = new RealmBuildInformation(expansionType, majorVersion, minorVersion, buildNumber);
                 }
                 realmInfo = new RealmInfo(realmType, isLocked, realmFlags, realmName, realmEndpointInformation, populationLevel, characterCount, realmTimeZone, realmID, realmBuildInformation);
-                this.realms.Add(realmInfo);
+                this.Realms.Add(realmInfo);
                 Logger.Log(LogType.Normal, $"[{realmInfo.RealmID}] {realmInfo.RealmName} {realmInfo.RealmEndpoint.realmHost}:{realmInfo.RealmEndpoint.realmPort}");
             }
             short unknown02 = inPacket.ReadInt16(); // 2.x + 3.x clients sends 0x10 0x00 and 1.12.1 client sends 0x00 0x02 
+
         }
 
         public void RealmListRequest()

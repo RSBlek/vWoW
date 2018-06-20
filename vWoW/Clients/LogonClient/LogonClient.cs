@@ -15,7 +15,7 @@ namespace vWoW.Clients
         private byte securityFlags;
         private string username;
         private string password;
-        private List<RealmInfo> realms = new List<RealmInfo>(); 
+        public List<RealmInfo> Realms { get; } = new List<RealmInfo>(); 
 
         public void SetManagedTcp(ManagedTCP managedTCP)
         {
