@@ -9,7 +9,7 @@ namespace vWoW.Clients
 {
     public partial class LogonClient
     {
-        [PacketHandlingMethod(LogonOpCode.AUTH_LOGON_CHALLENGE)]
+        [PacketHandlingMethod(LogonOpCode.AUTH_LOGON_PROOF)]
         public void AuthLogonProofResponse(InPacket inPacket)
         {
             

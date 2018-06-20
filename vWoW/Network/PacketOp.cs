@@ -22,6 +22,16 @@ namespace vWoW.Network
             this.Type = PacketType.World;
         }
 
+        public override string ToString()
+        {
+            string output = string.Empty;
+            if (Type == PacketType.Logon)
+                output = "LogonPacket " + (LogonOpCode)RawID;
+            else if(Type == PacketType.World)
+                output = "WorldPacket " + (WorldOpCode)RawID;
+            return output;
+        }
+
         public static bool operator ==(PacketOp packetOp1, PacketOp packetOp2)
         {
             return (packetOp1.RawID == packetOp2.RawID) && (packetOp1.Type == packetOp2.Type);

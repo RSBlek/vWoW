@@ -51,7 +51,10 @@ namespace vWoW.Network.PacketHandling
                         if (!(attribute is PacketHandlingMethod))
                             continue;
                         PacketHandlingMethod packetHandlingMethodAttribute = attribute as PacketHandlingMethod;
-                        Handles.Add(packetHandlingMethodAttribute.PacketOp, methodinfo);
+                        if (!Handles.ContainsKey(packetHandlingMethodAttribute.PacketOp))
+                            Handles.Add(packetHandlingMethodAttribute.PacketOp, methodinfo);
+                        else
+                            Logger.Log(LogType.Warning, $"Duplicate handler {methodinfo.Name} for {packetHandlingMethodAttribute.PacketOp}");
                     }
                 }
             }
@@ -77,7 +80,7 @@ namespace vWoW.Network.PacketHandling
         {
             if (!Handles.ContainsKey(inPacket.PacketOp))
             {
-                Logger.Log(LogType.Warning, $"Received unhandled {inPacket.PacketOp.Type}Packet OpCode={inPacket.PacketOp.RawID}");
+                Logger.Log(LogType.Warning, $"Received unhandled {inPacket.PacketOp}");
                 return;
             }
             MethodInfo method = Handles[inPacket.PacketOp];

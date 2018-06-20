@@ -6,6 +6,7 @@ namespace vWoW.Data.Enums
 {
     public enum LogType
     {
+        Normal,
         IncomingPacket,
         OutgoingPacket,
         Warning,
