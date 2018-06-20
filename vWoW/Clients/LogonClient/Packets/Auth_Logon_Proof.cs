@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using vWoW.Data.Enums;
 using vWoW.Network;
+using vWoW.Network.PacketHandling;
 
 namespace vWoW.Clients
 {
     public partial class LogonClient
     {
+        [PacketHandlingMethod(LogonOpCode.AUTH_LOGON_CHALLENGE)]
+        public void AuthLogonProofResponse(InPacket inPacket)
+        {
+            
+        }
+
+
         public void AuthLogonProofRequest(byte[] clienthmachash)
         {
             OutPacket outPacket = new OutPacket(LogonOpCode.AUTH_LOGON_PROOF);
